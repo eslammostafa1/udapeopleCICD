@@ -108,10 +108,11 @@ jobs:
       - restore_cache:
           keys: [frontend-deps]
       - run:
-          name: front-end scan
+          name: Front-end scan
           command: |
             cd frontend
             npm install
+            npm audit fix --force --audit-level=critical
             npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
 
@@ -130,7 +131,7 @@ jobs:
             npm audit fix --force --audit-level=critical
             npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
-            
+
 #   deploy-infrastructure:
 #     docker:
 #       # Docker image here that supports AWS CLI
