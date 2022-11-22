@@ -104,9 +104,6 @@ jobs:
     docker:
       - image: cimg/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
       - checkout
       - restore_cache:
           keys: [frontend-deps]
@@ -122,9 +119,6 @@ jobs:
     docker:
       - image: cimg/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
       - checkout
       - restore_cache:
           keys: [backend-deps]
@@ -136,6 +130,7 @@ jobs:
             npm audit fix --force --audit-level=critical
             npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
+            
 #   deploy-infrastructure:
 #     docker:
 #       # Docker image here that supports AWS CLI
