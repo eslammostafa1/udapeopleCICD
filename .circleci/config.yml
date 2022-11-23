@@ -24,16 +24,16 @@ commands:
               # sudo npm install --global n
               # sudo n 13.8.0
 
-      install_ansible:
-        description: install Ansible 
-        steps:
-          - run: 
-              name: install Ansible 
-              command: |
-                sudo apt update
-                sudo apt install software-properties-common -y
-                sudo add-apt-repository --yes --update ppa:ansible/ansible
-                sudo apt install ansible -y
+    install_ansible:
+      description: install Ansible 
+      steps:
+        - run: 
+            name: install Ansible 
+            command: |
+              sudo apt update
+              sudo apt install software-properties-common -y
+              sudo add-apt-repository --yes --update ppa:ansible/ansible
+              sudo apt install ansible -y
 
     destroy-environment: #step for create destroy-environment
       description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -242,7 +242,7 @@ jobs:
 #             exit 1
 #      # Here's where you will add some code to rollback on failure      
 
-  deploy-frontend:
+  deploy-frontend: # create deploy-frontend
     docker:
       - image: cimg/node:13.8.0
     steps:
@@ -265,9 +265,6 @@ jobs:
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             cat frontend/.env
-            # # your code here
-            # export API_URL="http://${BACKEND_IP}:3030"
-            # echo "${API_URL}"
       - run:
           name: Deploy frontend objects
           command: |
@@ -277,7 +274,7 @@ jobs:
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
-      # Here's where you will add some code to rollback on failure      
+
                     
 #   deploy-backend:
 #     docker:
